@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe JsonVarsSetter::JsonParser do
   let(:config_path) do
-    project_root = File.expand_path('../../', __FILE__)
+    project_root = File.expand_path('..', __dir__)
     File.join(project_root, '.github/workflows/ruby_project_matrix.json')
   end
 
@@ -14,7 +16,6 @@ RSpec.describe JsonVarsSetter::JsonParser do
 
     it '正しくJSONファイルを解析できること' do
       result = described_class.parse_config(config_path)
-      
       expect(result).to be_a(Hash)
       expect(result['os']).to include('ubuntu-latest', 'windows-latest', 'macos-latest')
       expect(result['versions']['ruby']).to include('3.0.6', '3.1.6', '3.2.6')

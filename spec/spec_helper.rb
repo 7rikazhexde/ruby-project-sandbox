@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/json_parser'
 
 RSpec.configure do |config|
