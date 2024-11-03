@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'json'
 
 module JsonVarsSetter
+  # JSON configuration file parser
   class JsonParser
     def self.parse_config(file_path, silent: false)
       JSON.parse(File.read(file_path))
@@ -12,7 +15,7 @@ module JsonVarsSetter
 end
 
 # スクリプトが直接実行された場合の処理
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   # プロジェクトルートディレクトリのパスを取得
   project_root = File.expand_path('../', __dir__)
   config_path = File.join(project_root, '.github/workflows/ruby_project_matrix.json')

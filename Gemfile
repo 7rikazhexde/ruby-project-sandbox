@@ -1,11 +1,13 @@
-# Gemfile
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-ruby ">= 3.0.0"
+source 'https://rubygems.org'
 
-gem "json"
-gem "rake"
+ruby '>= 3.0.0'
+
+gem 'json'
+gem 'rake'
 
 group :development, :test do
-  gem "rspec", "~> 3.12"
+  gem 'rspec', '~> 3.12'
+  gem 'rubocop', require: false
 end
