@@ -1,0 +1,58 @@
+# .github/workflows/ruby_test.yml
+# CI (Continuous Integration) workflow for Ruby projects
+# This workflow runs tests on multiple OS and Ruby versions to ensure cross-platform compatibility
+# It executes on every push to main and all pull requests
+
+name: Ruby CI
+
+# Workflow trigger configuration
+on:
+  push:
+    branches:
+      - main  # Triggered on pushes to main branch
+  pull_request:  # Triggered on all pull requests
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # Matrix configuration for test environments
+        os: [ubuntu-latest, windows-latest, macos-latest]  # Test on Linux, Windows, and macOS
+        ruby-version: ["3.0.6", "3.1.6", "3.2.6"]         # Test across multiple Ruby versions based on Gemfile requirements
+
+    steps:
+      # Step 1: Check out repository code
+      - name: Check out code
+        uses: actions/checkout@v4.2.2
+
+      # Step 2: Set up Ruby environment
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1.199.0
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          # Enable bundler cache for faster dependency installation
+          bundler-cache: true
+
+      # Step 3: Display Ruby and Bundler versions
+      - name: Display Ruby version
+        run: |
+          ruby --version
+          bundle --version
+
+      # Step 4: Install latest Bundler
+      # This step ensures we have a compatible Bundler version
+      #- name: Install Bundler
+      #  run: |
+      #    gem install bundler
+      #    bundle --version
+
+      # Step 5: Install dependencies
+      # Clean installation of dependencies using Bundler
+      #- name: Install dependencies
+      #  run: bundle install
+
+      # Step 6: Run tests
+      # Using bundle exec ensures we use the project's dependency versions
+      - name: Run tests
+        run: bundle exec rake test
